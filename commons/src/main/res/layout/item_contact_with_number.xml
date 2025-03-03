@@ -20,6 +20,7 @@
         android:layout_height="@dimen/normal_icon_size"
         android:layout_marginStart="@dimen/small_margin"
         android:padding="@dimen/tiny_margin"
+        app:tint="#E5E5E5"
         android:src="@drawable/ic_person_vector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
