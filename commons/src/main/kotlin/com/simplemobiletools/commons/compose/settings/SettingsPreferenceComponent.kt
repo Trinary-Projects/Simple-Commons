@@ -10,25 +10,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.compose.theme.preferenceSummaryColor
-import com.simplemobiletools.commons.compose.theme.preferenceTitleColor
+import com.simplemobiletools.commons.compose.theme.preferenceLabelColor
+import com.simplemobiletools.commons.compose.theme.preferenceValueColor
 
 @Composable
 fun SettingsPreferenceComponent(
     modifier: Modifier = Modifier,
-    preferenceTitle: String,
-    preferenceSummary: String? = null,
+    label: String,
+    value: String? = null,
     isPreferenceEnabled: Boolean = true,
     doOnPreferenceLongClick: (() -> Unit)? = null,
     doOnPreferenceClick: (() -> Unit)? = null,
-    preferenceSummaryColor: Color = preferenceSummaryColor(isEnabled = isPreferenceEnabled)
+    preferenceValueColor: Color = preferenceValueColor(isEnabled = isPreferenceEnabled),
+    preferenceLabelColor: Color = preferenceLabelColor(isEnabled = isPreferenceEnabled)
 ) {
     Column(
         modifier = Modifier
@@ -43,22 +43,18 @@ fun SettingsPreferenceComponent(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = preferenceTitle,
+            text = label,
             modifier = Modifier.fillMaxWidth(),
-            color = preferenceTitleColor(isEnabled = isPreferenceEnabled),
-            fontSize = with(LocalDensity.current) {
-                dimensionResource(id = R.dimen.normal_text_size).toSp()
-            }
+            color = preferenceLabelColor,
+            fontSize = 14.sp
         )
-        AnimatedVisibility(visible = !preferenceSummary.isNullOrBlank()) {
+        AnimatedVisibility(visible = !value.isNullOrBlank()) {
             Text(
-                text = preferenceSummary.toString(),
+                text = value.toString(),
                 modifier = Modifier
                     .fillMaxWidth(),
-                color = preferenceSummaryColor.copy(alpha = 0.6f),
-                fontSize = with(LocalDensity.current) {
-                    dimensionResource(id = R.dimen.normal_text_size).toSp()
-                }
+                color = preferenceValueColor,
+                fontSize = 14.sp
             )
         }
     }
@@ -69,8 +65,8 @@ fun SettingsPreferenceComponent(
 private fun SettingsPreferencePreview() {
     AppThemeSurface {
         SettingsPreferenceComponent(
-            preferenceTitle = stringResource(id = R.string.language),
-            preferenceSummary = stringResource(id = R.string.translation_english),
+            label = stringResource(id = R.string.language),
+            value = stringResource(id = R.string.translation_english),
             isPreferenceEnabled = true,
         )
     }

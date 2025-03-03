@@ -1,4 +1,4 @@
-package com.simplemobiletools.commons.compose.settings.scaffold
+package com.simplemobiletools.commons.compose.lists
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,18 +16,18 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.commons.compose.theme.SimpleTheme
 
 @Composable
-fun SettingsScaffoldTopBar(
+fun SimpleScaffoldTopBar(
     modifier: Modifier = Modifier,
     title: String,
     scrolledColor: Color,
-    navigationIconInteractionSource: MutableInteractionSource,
+    navigationIconInteractionSource: MutableInteractionSource = rememberMutableInteractionSource(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     statusBarColor: Int,
     colorTransitionFraction: Float,
@@ -39,7 +39,7 @@ fun SettingsScaffoldTopBar(
             Text(
                 text = title,
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(start = SimpleTheme.dimens.padding.medium)
                     .fillMaxWidth(),
                 color = scrolledColor,
                 maxLines = 1,
@@ -47,25 +47,25 @@ fun SettingsScaffoldTopBar(
             )
         },
         navigationIcon = {
-            SettingsNavigationIcon(
+            SimpleNavigationIcon(
                 goBack = goBack,
                 navigationIconInteractionSource = navigationIconInteractionSource,
                 iconColor = scrolledColor
             )
         },
         scrollBehavior = scrollBehavior,
-        colors = topAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
+        colors = simpleTopAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
         modifier = modifier.topAppBarPaddings(),
         windowInsets = topAppBarInsets()
     )
 }
 
 @Composable
-fun SettingsScaffoldTopBar(
+fun SimpleScaffoldTopBar(
     modifier: Modifier = Modifier,
     title: @Composable (scrolledColor: Color) -> Unit,
     scrolledColor: Color,
-    navigationIconInteractionSource: MutableInteractionSource,
+    navigationIconInteractionSource: MutableInteractionSource = rememberMutableInteractionSource(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     statusBarColor: Int,
     colorTransitionFraction: Float,
@@ -77,26 +77,26 @@ fun SettingsScaffoldTopBar(
             title(scrolledColor)
         },
         navigationIcon = {
-            SettingsNavigationIcon(
+            SimpleNavigationIcon(
                 goBack = goBack,
                 navigationIconInteractionSource = navigationIconInteractionSource,
                 iconColor = scrolledColor
             )
         },
         scrollBehavior = scrollBehavior,
-        colors = topAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
+        colors = simpleTopAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
         modifier = modifier.topAppBarPaddings(),
         windowInsets = topAppBarInsets()
     )
 }
 
 @Composable
-fun SettingsScaffoldTopBar(
+fun SimpleScaffoldTopBar(
     modifier: Modifier = Modifier,
     title: @Composable (scrolledColor: Color) -> Unit,
     actions: @Composable RowScope.() -> Unit,
     scrolledColor: Color,
-    navigationIconInteractionSource: MutableInteractionSource,
+    navigationIconInteractionSource: MutableInteractionSource = rememberMutableInteractionSource(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState()),
     statusBarColor: Int,
     colorTransitionFraction: Float,
@@ -108,7 +108,7 @@ fun SettingsScaffoldTopBar(
             title(scrolledColor)
         },
         navigationIcon = {
-            SettingsNavigationIcon(
+            SimpleNavigationIcon(
                 goBack = goBack,
                 navigationIconInteractionSource = navigationIconInteractionSource,
                 iconColor = scrolledColor
@@ -116,21 +116,21 @@ fun SettingsScaffoldTopBar(
         },
         actions = actions,
         scrollBehavior = scrollBehavior,
-        colors = topAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
+        colors = simpleTopAppBarColors(statusBarColor, colorTransitionFraction, contrastColor),
         modifier = modifier.topAppBarPaddings(),
         windowInsets = topAppBarInsets()
     )
 }
 
 @Composable
-private fun topAppBarColors(
+fun simpleTopAppBarColors(
     statusBarColor: Int,
     colorTransitionFraction: Float,
     contrastColor: Color
 ) = TopAppBarDefaults.topAppBarColors(
     scrolledContainerColor = Color(statusBarColor),
-    containerColor = if (colorTransitionFraction == 1f) contrastColor else MaterialTheme.colorScheme.surface,
-    navigationIconContentColor = if (colorTransitionFraction == 1f) contrastColor else MaterialTheme.colorScheme.surface
+    containerColor = if (colorTransitionFraction == 1f) contrastColor else SimpleTheme.colorScheme.surface,
+    navigationIconContentColor = if (colorTransitionFraction == 1f) contrastColor else SimpleTheme.colorScheme.surface
 )
 
 @Composable
@@ -149,39 +149,39 @@ fun Modifier.topAppBarPaddings(
 }
 
 @Composable
-fun SettingsNavigationIcon(
+fun SimpleNavigationIcon(
     modifier: Modifier = Modifier,
-    navigationIconInteractionSource: MutableInteractionSource,
+    navigationIconInteractionSource: MutableInteractionSource = rememberMutableInteractionSource(),
     goBack: () -> Unit,
     iconColor: Color? = null
 ) {
     Box(
         modifier
-            .padding(start = 8.dp)
+            .padding(start = SimpleTheme.dimens.padding.medium)
             .clip(RoundedCornerShape(50))
             .clickable(
                 navigationIconInteractionSource, rememberRipple(
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = SimpleTheme.colorScheme.onSurface,
                     bounded = true
                 )
             ) { goBack() }
     ) {
-        BackIcon(iconColor)
+        SimpleBackIcon(iconColor)
     }
 }
 
 @Composable
-fun BackIcon(iconColor: Color?) {
+fun SimpleBackIcon(iconColor: Color?) {
     if (iconColor == null) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(id = R.string.back),
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(SimpleTheme.dimens.padding.small)
         )
     } else {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(id = R.string.back),
             tint = iconColor,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(SimpleTheme.dimens.padding.small)
         )
     }
 }
@@ -189,9 +189,9 @@ fun BackIcon(iconColor: Color?) {
 
 @Composable
 @MyDevices
-private fun SettingsScaffoldTopBarPreview() {
+private fun SimpleScaffoldTopBarPreview() {
     AppThemeSurface {
-        SettingsScaffoldTopBar(
+        SimpleScaffoldTopBar(
             title = "SettingsScaffoldTopBar",
             scrolledColor = Color.Black,
             navigationIconInteractionSource = rememberMutableInteractionSource(),

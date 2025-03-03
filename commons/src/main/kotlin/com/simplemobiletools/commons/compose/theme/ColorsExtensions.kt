@@ -1,6 +1,5 @@
 package com.simplemobiletools.commons.compose.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
@@ -30,13 +29,13 @@ val iconsColor
 
 @Composable
 @ReadOnlyComposable
-fun preferenceSummaryColor(isEnabled: Boolean) =
-    if (isEnabled) textSubTitleColor else disabledTextColor
+fun preferenceValueColor(isEnabled: Boolean) =
+    if (isEnabled) SimpleTheme.colorScheme.onSurface.copy(alpha = 0.6f) else disabledTextColor
 
 @Composable
 @ReadOnlyComposable
-fun preferenceTitleColor(isEnabled: Boolean) = if (isEnabled) MaterialTheme.colorScheme.onSurface else disabledTextColor
+fun preferenceLabelColor(isEnabled: Boolean) = if (isEnabled) SimpleTheme.colorScheme.onSurface else disabledTextColor
 
-fun Color.isLitWell(threshold : Float = LUMINANCE_THRESHOLD) = luminance() > threshold
+fun Color.isLitWell(threshold: Float = LUMINANCE_THRESHOLD) = luminance() > threshold
 
 fun Color.isNotLitWell(threshold: Float = LUMINANCE_THRESHOLD) = luminance() < threshold
