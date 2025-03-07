@@ -76,7 +76,7 @@ fun Context.toast(msg: String, length: Int = Toast.LENGTH_SHORT) {
 private fun doToast(context: Context, message: String, length: Int) {
     if (context is Activity) {
         if (!context.isFinishing && !context.isDestroyed) {
-            Toast.makeText(context, message, length).show()
+            Toast.makeText(context.applicationContext, message, length).show()
         }
     } else {
         Toast.makeText(context, message, length).show()
